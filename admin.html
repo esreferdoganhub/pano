@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pano Yönetim</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Yönetim Paneli</h1>
+            <p class="subtitle">Yeni Yönerge Oluştur</p>
+        </header>
+
+        <div class="admin-panel">
+            <form id="postForm">
+                <div class="input-group">
+                    <label for="title">Başlık (Opsiyonel)</label>
+                    <input type="text" id="title" placeholder="Örn: Ders 1 - HTML Giriş">
+                </div>
+
+                <div class="input-group">
+                    <label for="content">İçerik (HTML veya Metin)</label>
+                    <textarea id="content" placeholder="<p>Merhaba arkadaşlar...</p>" required></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="secret">Admin Şifresi</label>
+                    <input type="password" id="secret" placeholder="Şifre" required>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitBtn">Yayınla</button>
+            </form>
+            <div id="status" style="margin-top: 1rem; text-align: center; color: var(--text-muted);"></div>
+
+            <div id="managePosts" style="margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+                <!-- Posts will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+
+</html>
