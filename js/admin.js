@@ -112,24 +112,25 @@ if (!firebaseConfig.apiKey) {
 
         manageContainer.appendChild(list);
     });
+}
 
-    // Make deletePost function global so onclick works
-    window.deletePost = function (id) {
-        const secret = document.getElementById('secret').value;
-        if (secret !== "esref1560") {
-            alert("Silmek için şifre alanına doğru şifreyi girmelisiniz!");
-            document.getElementById('secret').focus();
-            return;
-        }
-
-        if (confirm("Bu paylaşımı silmek istediğinize emin misiniz?")) {
-            db.ref('posts').child(id).remove()
-                .then(() => {
-                    console.log("Silindi");
-                    // UI updates automatically via the on('value') listener
-                })
-                .catch((error) => {
-                    alert("Silinemedi: " + error.message);
-                });
-        }
+// Make deletePost function global so onclick works
+window.deletePost = function (id) {
+    const secret = document.getElementById('secret').value;
+    if (secret !== "esref1560") {
+        alert("Silmek için şifre alanına doğru şifreyi girmelisiniz!");
+        document.getElementById('secret').focus();
+        return;
     }
+
+    if (confirm("Bu paylaşımı silmek istediğinize emin misiniz?")) {
+        const db = firebase.database(); // Get db instance here
+        db.ref('posts').child(id).remove()
+            .then(() => {
+                console.log("Silindi");
+            })
+            .catch((error) => {
+                alert("Silinemedi: " + error.message);
+            });
+    }
+}
