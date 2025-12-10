@@ -24,6 +24,8 @@ if (!firebaseConfig.apiKey) {
         e.preventDefault();
 
         const title = document.getElementById('title').value;
+        const category = document.getElementById('category').value;
+        const isPinned = document.getElementById('isPinned').checked;
         const content = document.getElementById('content').value;
         const secret = document.getElementById('secret').value;
         const submitBtn = document.getElementById('submitBtn');
@@ -43,6 +45,8 @@ if (!firebaseConfig.apiKey) {
         newPostRef.set({
             title: title,
             content: content,
+            category: category,
+            isPinned: isPinned,
             timestamp: firebase.database.ServerValue.TIMESTAMP
         }).then(() => {
             statusEl.innerText = "Başarıyla yayınlandı!";

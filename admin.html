@@ -35,6 +35,28 @@
                     <textarea id="content" placeholder="<p>Merhaba arkadaşlar...</p>" required></textarea>
                 </div>
 
+                <div class="input-group" style="display: flex; gap: 1rem;">
+                    <div style="flex: 2;">
+                        <label for="category">Kategori</label>
+                        <select id="category"
+                            style="width: 100%; padding: 1rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 0.75rem; color: white;">
+                            <option value="Genel">Genel</option>
+                            <option value="Ders Notu">Ders Notu</option>
+                            <option value="Ödev">Ödev</option>
+                            <option value="Kod Örneği">Kod Örneği</option>
+                            <option value="Duyuru">Duyuru</option>
+                        </select>
+                    </div>
+                    <div
+                        style="flex: 1; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 0.75rem; margin-top: 1.4rem;">
+                        <label for="isPinned"
+                            style="margin: 0; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="isPinned" style="width: auto; margin: 0;">
+                            <span>Sabitle 📌</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="input-group">
                     <label for="secret">Admin Şifresi</label>
                     <input type="password" id="secret" placeholder="Şifre" required>

@@ -17,6 +17,11 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <!-- Marked.js for Markdown Support -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Highlight.js for Code Coloring -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 
 <body>
@@ -25,6 +30,15 @@
         <header>
             <h1>Sınıf Panosu</h1>
             <p class="subtitle">Canlı Ders Yönergeleri</p>
+
+            <div id="filters"
+                style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                <button class="filter-btn active" data-category="ALL">Tümü</button>
+                <button class="filter-btn" data-category="Ders Notu">Ders Notu</button>
+                <button class="filter-btn" data-category="Ödev">Ödev</button>
+                <button class="filter-btn" data-category="Kod Örneği">Kod</button>
+                <button class="filter-btn" data-category="Duyuru">Duyuru</button>
+            </div>
         </header>
 
         <div id="feed">
