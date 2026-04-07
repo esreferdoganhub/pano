@@ -14,6 +14,7 @@ const firebaseConfig = {
 if (!firebaseConfig.apiKey) {
     alert("Lütfen js/admin.js dosyasına Firebase ayarlarını ekleyin!");
 } else {
+    firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const configRef = db.ref('config');
 
