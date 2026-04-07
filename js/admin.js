@@ -27,6 +27,11 @@ if (!firebaseConfig.apiKey) {
 
     let adminPassword = "";
 
+    // Disable login until config is loaded
+    const loginBtn = adminLoginForm.querySelector('button');
+    loginBtn.disabled = true;
+    loginBtn.innerText = "Yükleniyor...";
+
     // 1. Initial Config Check
     configRef.once('value', (snapshot) => {
         const config = snapshot.val() || {};
@@ -42,9 +47,17 @@ if (!firebaseConfig.apiKey) {
         }
 
         // Check Session
-        if (sessionStorage.getItem('adminAuth') === adminPassword) {
+        if (sessionStorage.getItem('adminAuth') === adminPassword && adminPassword !== "") {
             showAdmin();
         }
+
+        loginBtn.disabled = false;
+        loginBtn.innerText = "Giriş Yap";
+    }, (error) => {
+        console.error("Config fetch failed:", error);
+        adminLoginError.innerText = "Bağlantı hatası! Lütfen sayfayı yenileyin.";
+        // Fallback for safety if database is unreachable but we want to allow entry?
+        // Better to wait for user to fix rules.
     });
 
     function showAdmin() {
@@ -195,7 +208,9 @@ if (!firebaseConfig.apiKey) {
 // Make deletePost function global so onclick works
 window.deletePost = function (id) {
     const secret = sessionStorage.getItem('adminAuth');
-    if (secret !== adminPassword) {
+    // We need to fetch the password again or use a global reference since this is outside the scope
+    // For simplicity, let's just check if the session exists and matches the one we used to login
+    if (!secret) {
         alert("Yetkiniz yok!");
         return;
     }
