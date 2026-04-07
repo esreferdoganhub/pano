@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pano Yönetim</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+
+<body>
+    <div id="adminLogin" class="login-overlay">
+        <div class="login-card">
+            <h2>Yönetim Paneli Giriş</h2>
+            <form id="adminLoginForm">
+                <div class="input-group">
+                    <input type="password" id="adminLoginPass" placeholder="Admin Şifresi" required>
+                </div>
+                <button type="submit" class="btn-primary">Giriş Yap</button>
+            </form>
+            <p id="adminLoginError" style="margin-top: 1rem; color: #ff6b6b; font-size: 0.9rem;"></p>
+        </div>
+    </div>
+
+    <div class="container hidden" id="adminContent">
+        <header>
+            <h1>Yönetim Paneli</h1>
+            <p class="subtitle">Yeni Yönerge Oluştur</p>
+        </header>
+
+        <div class="admin-panel">
+            <form id="postForm">
+                <div class="input-group">
+                    <label for="title">Başlık (Opsiyonel)</label>
+                    <input type="text" id="title" placeholder="Örn: Ders 1 - HTML Giriş">
+                </div>
+
+                <div class="input-group">
+                    <label for="content">İçerik (HTML veya Metin)</label>
+                    <textarea id="content" placeholder="<p>Merhaba arkadaşlar...</p>" required></textarea>
+                </div>
+
+                <div class="input-group" style="display: flex; gap: 1rem;">
+                    <div style="flex: 2;">
+                        <label for="category">Kategori</label>
+                        <select id="category"
+                            style="width: 100%; padding: 1rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 0.75rem; color: white;">
+                            <option value="Genel">Genel</option>
+                            <option value="Ders Notu">Ders Notu</option>
+                            <option value="Ödev">Ödev</option>
+                            <option value="Kod Örneği">Kod Örneği</option>
+                            <option value="Duyuru">Duyuru</option>
+                        </select>
+                    </div>
+                    <div
+                        style="flex: 1; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 0.75rem; margin-top: 1.4rem;">
+                        <label for="isPinned"
+                            style="margin: 0; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="isPinned" style="width: auto; margin: 0;">
+                            <span>Sabitle 📌</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group hidden">
+                    <label for="secret">Admin Şifresi (Hidden)</label>
+                    <input type="password" id="secret" placeholder="Şifre">
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitBtn">Yayınla</button>
+            </form>
+            <div id="status" style="margin-top: 1rem; text-align: center; color: var(--text-muted);"></div>
+
+            <div id="managePosts" style="margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+                <!-- Posts will be loaded here -->
+            </div>
+
+            <!-- Password Management Section -->
+            <div class="settings-section">
+                <h3>Şifre Yönetimi</h3>
+                <p class="subtitle" style="margin-bottom: 1.5rem;">Pano ve Panel erişim şifrelerini buradan güncelleyebilirsiniz.</p>
+                
+                <div class="settings-grid">
+                    <div class="input-group">
+                        <label>Ana Sayfa (Pano) Şifresi</label>
+                        <input type="text" id="newViewPass" placeholder="Yeni Pano Şifresi">
+                        <button class="btn-primary" onclick="updatePassword('view')" style="margin-top: 0.5rem; padding: 0.5rem;">Güncelle</button>
+                    </div>
+                    <div class="input-group">
+                        <label>Yönetim Paneli Şifresi</label>
+                        <input type="text" id="newAdminPass" placeholder="Yeni Admin Şifresi">
+                        <button class="btn-primary" onclick="updatePassword('admin')" style="margin-top: 0.5rem; padding: 0.5rem;">Güncelle</button>
+                    </div>
+                </div>
+                <div id="settingsStatus" style="margin-top: 1rem; text-align: center; font-size: 0.9rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+
+</html>
