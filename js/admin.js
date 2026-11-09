@@ -111,13 +111,38 @@ if (!firebaseConfig.apiKey) {
         });
     };
 
+    // Toggle code options visibility
+    const isCodeCheckbox = document.getElementById('isCode');
+    const codeOptions = document.getElementById('codeOptions');
+    isCodeCheckbox.addEventListener('change', () => {
+        codeOptions.classList.toggle('hidden', !isCodeCheckbox.checked);
+        // Konfor: kod seçilince kategoriyi otomatik "Kod Örneği" yap
+        if (isCodeCheckbox.checked) {
+            document.getElementById('category').value = 'Kod Örneği';
+        }
+    });
+
+    // HTML kaçış: kodun < > & karakterleri etiket sanılmasın
+    function escapeHtml(str) {
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
     postForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         const title = document.getElementById('title').value;
         const category = document.getElementById('category').value;
         const isPinned = document.getElementById('isPinned').checked;
-        const content = document.getElementById('content').value;
+        let content = document.getElementById('content').value;
+
+        // Kod bloğu seçiliyse içeriği <pre><code> içine sararak biçimi koru
+        if (isCodeCheckbox.checked) {
+            const lang = document.getElementById('codeLang').value;
+            content = `<pre><code class="language-${lang}">${escapeHtml(content)}</code></pre>`;
+        }
         const secret = sessionStorage.getItem('adminAuth');
         const submitBtn = document.getElementById('submitBtn');
 
@@ -140,6 +165,7 @@ if (!firebaseConfig.apiKey) {
             statusEl.innerText = "Başarıyla yayınlandı!";
             statusEl.style.color = "#4ade80";
             postForm.reset();
+            codeOptions.classList.add('hidden'); // reset sonrası kod seçeneklerini gizle
             // Restore password field if you want convenience
             document.getElementById('secret').value = secret;
 

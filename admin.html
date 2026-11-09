@@ -43,8 +43,33 @@
                 </div>
 
                 <div class="input-group">
-                    <label for="content">İçerik (HTML veya Metin)</label>
+                    <label for="content">İçerik (HTML, Metin veya Kod)</label>
                     <textarea id="content" placeholder="<p>Merhaba arkadaşlar...</p>" required></textarea>
+                </div>
+
+                <div class="input-group"
+                    style="background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem;">
+                    <label for="isCode"
+                        style="margin: 0 0 0.75rem 0; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="isCode" style="width: auto; margin: 0;">
+                        <span>Kod bloğu olarak ekle (biçimi korur) &lt;/&gt;</span>
+                    </label>
+                    <div id="codeOptions" class="hidden">
+                        <label for="codeLang" style="font-size: 0.85rem;">Programlama Dili</label>
+                        <select id="codeLang"
+                            style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 0.75rem; color: white;">
+                            <option value="cpp">C / C++ / Arduino</option>
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="java">Java</option>
+                            <option value="csharp">C#</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="sql">SQL</option>
+                            <option value="bash">Bash / Terminal</option>
+                            <option value="plaintext">Düz Metin</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="input-group" style="display: flex; gap: 1rem;">
