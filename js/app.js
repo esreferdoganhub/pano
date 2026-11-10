@@ -32,15 +32,27 @@ if (!firebaseConfig.apiKey) {
     const loginError = document.getElementById('loginError');
 
     let viewPassword = "";
+    let configLoaded = false; // Firebase'den şifre geldi mi?
+
+    // Şifre yüklenene kadar giriş butonunu kilitle (race condition önlemi)
+    const loginBtn = loginForm.querySelector('button');
+    loginBtn.disabled = true;
+    loginBtn.innerText = "Yükleniyor...";
 
     // 1. Initial Config Check
     configRef.child('viewPassword').on('value', (snapshot) => {
         viewPassword = snapshot.val() || "1300"; // Fallback to 1300 if not set
+        configLoaded = true;
+        loginBtn.disabled = false;
+        loginBtn.innerText = "Giriş Yap";
 
         // Check Session
         if (sessionStorage.getItem('visitorAuth') === viewPassword) {
             showBoard();
         }
+    }, (error) => {
+        console.error("Config fetch failed:", error);
+        loginError.innerText = "Bağlantı hatası! Lütfen sayfayı yenileyin.";
     });
 
     function showBoard() {
@@ -52,8 +64,16 @@ if (!firebaseConfig.apiKey) {
     // 2. Visitor Login
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
+
+        // Şifre henüz Firebase'den gelmediyse "Hatalı" deme, beklet
+        if (!configLoaded) {
+            loginError.innerText = "Şifre yükleniyor, lütfen birkaç saniye bekleyin...";
+            return;
+        }
+
         const input = document.getElementById('visitorPass').value;
         if (input === viewPassword) {
+            loginError.innerText = "";
             sessionStorage.setItem('visitorAuth', viewPassword);
             showBoard();
         } else {
